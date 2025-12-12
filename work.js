@@ -93,17 +93,19 @@ const users = [
 
 // Завдання 1
 // Отримати загальну суму балансу (поле balance) всіх користувачів.
-const calculateTotalBalance = (users) =>
-  users.reduce((total, user) => total + user.balance, 0);
+const calculateTotalBalance = users.reduce((acc, item) => {
+  return acc + item.balance;
+}, 0);
 
-console.log(calculateTotalBalance(users)); // 20916
+console.log(calculateTotalBalance); // 20916
 
 // Завдання 2
 // Масив імен всіх користувачів у яких є друг із зазначеним ім'ям.
-const getUsersWithFriend = (users, friendName) =>
-  users
+const getUsersWithFriend = (users, friendName) => {
+  return users
     .filter((user) => user.friends.includes(friendName))
-    .map((user) => user.name);
+    .map((user) => user.name)
+};
 
 console.log(getUsersWithFriend(users, "Briana Decker"));
 // [ "Sharlene Bush", "Sheree Anthony" ]
@@ -112,10 +114,10 @@ console.log(getUsersWithFriend(users, "Goldie Gentry"));
 
 // Завдання 3
 // Масив імен (поле name) людей, відсортованих в залежності від кількості їх друзів (поле friends).
-const getNamesSortedByFriendsCount = (users) =>
-  [...users]
-    .sort((a, b) => a.friends.length - b.friends.length)
-    .map((user) => user.name);
+const getNamesSortedByFriendsCount = (users) => {
+  return users.sort((userA, userB) => userA.friends.length - userB.friends.length)
+              .map(user => user.name)
+};
 
 console.log(getNamesSortedByFriendsCount(users));
 // [ "Moore Hensley", "Sharlene Bush", "Elma Head", "Carey Barr",
@@ -123,8 +125,14 @@ console.log(getNamesSortedByFriendsCount(users));
 
 // Завдання 4
 // Отримати масив всіх умінь всіх користувачів (поле skills), при цьому не має бути повторюваних умінь і вони повинні бути відсортовані в алфавітному порядку.
-const getSortedUniqueSkills = (users) =>
-  [...new Set(users.flatMap((user) => user.skills))].sort();
+const getSortedUniqueSkills = (users) => {
+  const uniqueSckills = []
+  users.forEach((user) => user.skills.forEach((skill) => {
+    if (uniqueSckills.includes(skill)) return
+    uniqueSckills.push(skill)
+  } ))
+  return uniqueSckills
+};
 
 console.log(getSortedUniqueSkills(users));
 // [ "adipisicing", "amet", "anim", "commodo", "culpa", "elit", "ex", "ipsum", "irure", "laborum", "lorem", "mollit", "non", "nostrud", "nulla", "proident", "tempor", "velit", "veniam" ]
